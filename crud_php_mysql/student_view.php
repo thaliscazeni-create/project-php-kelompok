@@ -22,7 +22,7 @@
 <body>
   <div class="container">
     <div id="header">
-      <h1 id="logo">Data Mahasiswa</h1>
+      <h1 id="logo">Daftar Data Mahasiswa</h1>
     </div>
     <hr>
     <nav>
@@ -41,6 +41,7 @@
 
     <table>
     <tr>
+      <th>No</th>
       <th>NIM</th>
       <th>Nama</th>
       <th>Tempat Lahir</th>
@@ -55,12 +56,14 @@
       if(!$result) {
           die ("Query Error: ".mysqli_errno($connection)." - ".mysqli_error($connection));
       }
-    
+
+      $no = 1;
       while($data = mysqli_fetch_assoc($result)){ 
         $birth_date = strtotime($data["birth_date"]);
         $formatted_date = date("d-m-Y", $birth_date);
         
         echo "<tr>";
+        echo "<td>".$no++."</td>";
         echo "<td>$data[nim]</td>";
         echo "<td>$data[name]</td>";
         echo "<td>$data[birth_city]</td>";
