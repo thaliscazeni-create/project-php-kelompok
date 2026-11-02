@@ -17,7 +17,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Data Mahasiswa</title>
-  <link href="assets/assets.css" rel="stylesheet" >
+  <link href="assets/style.css" rel="stylesheet" >
 </head>
 <body>
   <div class="container">
@@ -27,19 +27,17 @@
     <hr>
     <nav>
       <ul>
-        <li><a href="student_view.php">Tampil</a></li>
-        <li><a href="student_add.php">Tambah</a>
-        <li><a href="logout.php">Logout</a>
+        <li><a href="student_view.php" class="active">Tampil</a></li>
+        <li><a href="student_add.php">Tambah</a></li>
+        <li><a href="logout.php">Logout</a></li>
       </ul>
-    </nav>
+    </nav>    
     <?php
       if (isset($message)) {
-         echo "<div class='pesan'>$message</div>";
+          echo "<div class='pesan'>$message</div>";
       }
     ?>
-   <!-- ... kode sebelumnya (header, nav, dll) ... -->
-
-    <table>
+    <table border="1">
     <tr>
       <th>No</th>
       <th>NIM</th>
@@ -49,7 +47,7 @@
       <th>Fakultas</th>
       <th>Jurusan</th>
       <th>IPK</th>
-      <th>Aksi</th> <!-- Tambahan Kolom Aksi -->
+      <th>Aksi</th>
     </tr>
     <?php
       $result = mysqli_query($connection, $query);
@@ -61,7 +59,7 @@
       while($data = mysqli_fetch_assoc($result)){ 
         $birth_date = strtotime($data["birth_date"]);
         $formatted_date = date("d-m-Y", $birth_date);
-        
+
         echo "<tr>";
         echo "<td>".$no++."</td>";
         echo "<td>$data[nim]</td>";
@@ -71,20 +69,22 @@
         echo "<td>$data[faculty]</td>";
         echo "<td>$data[department]</td>";
         echo "<td>$data[gpa]</td>";
-        
-        // Tambahan Tombol Aksi
         echo "<td>";
-        echo "<a href='student_edit.php?nim=$data[nim]' class='btn-edit'>Edit</a> | ";
-        echo "<a href='student_delete.php?nim=$data[nim]' class='btn-delete' onclick=\"return confirm('Yakin ingin menghapus data ini?');\">Hapus</a>";
+        echo "<a href=\"student_edit.php?nim=$data[nim]\">Edit</a> ";
+        echo "<form action=\"student_delete.php\" method=\"post\" style=\"display:inline\" ";
+        echo "onsubmit=\"return confirm('Yakin ingin menghapus data $data[nim]?');\">";
+        echo "<input type=\"hidden\" name=\"nim\" value=\"$data[nim]\">";
+        echo "<input type=\"submit\" value=\"Hapus\">";
+        echo "</form>";
         echo "</td>";
-        
         echo "</tr>";
       }
-      
+
       mysqli_free_result($result);
       mysqli_close($connection);
-    ?>
+    ?>    
     </table>
   </div>
 </body>
 </html>
+
