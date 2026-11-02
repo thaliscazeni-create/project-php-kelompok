@@ -24,7 +24,7 @@
         $result_delete = mysqli_query($connection, $query_delete);
 
         if ($result_delete) {
-            $message = "Data mahasiswa dengan nama = \"<b>$name</b>\" berhasil dihapus";
+            $message = "Data mahasiswa dengan nama \"<b>$name</b>\" berhasil dihapus";
             $message = urlencode($message);
             header("Location: student_view.php?message={$message}");
             exit;
